@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['payload.txt'],
       manifest: {
         name: 'Keep SIM',
         short_name: 'Keep SIM',
@@ -28,7 +27,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,txt}'],
+        globPatterns: ['**/*.{js,css,html}'],
         runtimeCaching: [
           {
             urlPattern: /\/payload\.txt/,
