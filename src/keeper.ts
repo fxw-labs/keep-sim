@@ -4,7 +4,7 @@ export interface KeeperElements {
   usageEl: HTMLDivElement;
 }
 
-const PAYLOAD_URL = '/payload.txt';
+const PAYLOAD_URL = 'payload.txt';
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -15,7 +15,8 @@ function formatBytes(bytes: number): string {
 export function initKeeper(elements: KeeperElements): void {
   const { button, statusEl, usageEl } = elements;
 
-  button.addEventListener('click', async () => {
+  // Immediate visual feedback to confirm the click handler is wired up.
+  const handleClick = async (): Promise<void> => {
     button.disabled = true;
     statusEl.textContent = 'Downloading...';
     usageEl.textContent = '';
@@ -48,5 +49,10 @@ export function initKeeper(elements: KeeperElements): void {
     } finally {
       button.disabled = false;
     }
-  });
+  };
+
+  button.addEventListener('click', handleClick);
+
+  // Fallback: if addEventListener somehow failed, wire up onclick directly.
+  button.onclick = handleClick;
 }
